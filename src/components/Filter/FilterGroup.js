@@ -3,7 +3,7 @@ import FilterItem from './FilterItem';
 import {capitalize} from '../../util';
 import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import getFilteredLessons from '../../selectors/lesson';
+import getAvailableLessons from '../../selectors/lesson';
 
 const FilterGroup = React.createClass({
   render(){
