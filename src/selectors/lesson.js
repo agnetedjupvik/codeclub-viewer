@@ -50,9 +50,13 @@ export const getAvailableLessons = createSelector(
   (filteredLessons = {}) => {
     let availableAndroidLessons = 0;
 
-    return Object.keys(filteredLessons).reduce((sum, lessonKey) => {
+    Object.keys(filteredLessons).reduce((sum, lessonKey) => {
       const lesson = filteredLessons[lessonKey];
-      'android' in lesson.tags.operativsystem ? availableAndroidLessons++ : null;
+      if('operativsystem' in lesson.tags){
+        availableAndroidLessons++;
+      }
     }, 0);
+
+    return availableAndroidLessons;
   }
 );

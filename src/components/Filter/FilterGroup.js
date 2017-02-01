@@ -3,17 +3,17 @@ import FilterItem from './FilterItem';
 import {capitalize} from '../../util';
 import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import getAvailableLessons from '../../selectors/lesson';
 
 const FilterGroup = React.createClass({
   render(){
     const groupName = capitalize(this.props.groupName);
     const filterTags = this.props.tagItems;
+    console.log(this.props.availableLessons);
     const filterItems = Object.keys(filterTags).map((tagItem, idx) => {
       const onCheck = () => this.props.onFilterCheck(groupName, tagItem);
 
       return (
-        <FilterItem key={idx} tagItem={tagItem} checked={filterTags[tagItem]} onCheck={onCheck}/>
+        <FilterItem key={idx} tagItem={tagItem} numberOfLessons={this.props.availableLessons} checked={filterTags[tagItem]} onCheck={onCheck}/>
       );
     });
 
@@ -31,5 +31,8 @@ FilterGroup.propTypes = {
   tagItems: PropTypes.object,
   onCheck: PropTypes.func
 };
+
+
+
 
 export default withStyles(styles)(FilterGroup);
