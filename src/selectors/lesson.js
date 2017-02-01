@@ -38,3 +38,22 @@ export const getFilteredAndIndexedLessons = createSelector(
     }, {});
   }
 );
+
+export const getAvailableLessons = createSelector(
+  [getFilteredLessons],
+  (filteredLessons = {}) => {
+    const availableAndroidLessons = 0;
+
+    return Object.keys(filteredLessons).reduce((sum, lessonKey) => {
+      const lesson = lessons[lessonKey];
+      'android' in lesson.tags.operativsystem ? availableAndroidLessons++ : null;
+    }, 0);
+  }
+);
+
+
+{
+  android: 10,
+  arduino: 5,
+  windows: 8
+}
