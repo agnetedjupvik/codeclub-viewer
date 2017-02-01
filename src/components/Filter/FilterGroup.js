@@ -11,7 +11,7 @@ const FilterGroup = React.createClass({
     const filterItems = Object.keys(filterTags).map((tagItem, idx) => {
       const onCheck = () => this.props.onFilterCheck(groupName, tagItem);
       return (
-        <FilterItem key={idx} tagItem={tagItem} checked={filterTags[tagItem]} onCheck={onCheck}/>
+        <FilterItem key={idx} tagItem={tagItem} numberOfLessons={1} checked={filterTags[tagItem]} onCheck={onCheck}/>
       );
     });
 
