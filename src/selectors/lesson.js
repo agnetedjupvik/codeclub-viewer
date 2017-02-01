@@ -39,6 +39,12 @@ export const getFilteredAndIndexedLessons = createSelector(
   }
 );
 
+/*
+* Creates an object containing number of available lessons given a set of tags
+* Input props: courseName (string, optional)
+*/
+
+
 export const getAvailableLessons = createSelector(
   [getFilteredLessons],
   (filteredLessons = {}) => {
