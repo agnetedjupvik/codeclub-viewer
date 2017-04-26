@@ -63,6 +63,9 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const lessonTags = cleanseTags(lessonFrontmatter.tags, false);
     const tags = {...courseTags, ...lessonTags};
 
+    const lessonProgress = {1: true, 2: false};
+    const progress = {'coursePath': path, ...lessonProgress};
+
     // Everything between '.' and last '/'. Add '/README' at the end
     const readmePath = path.slice(1, path.lastIndexOf('/')) + '/README';
     const hasReadme = readmeContext.keys().indexOf('.' + readmePath + '.md') !== -1;
@@ -76,6 +79,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
       readmePath: hasReadme ? readmePath : '',
       course: courseName,
       tags,
+      progress,
       // Everything between '.' and '.md'
       path: path.slice(1, path.length - 3)
     };
@@ -175,7 +179,7 @@ export function tagsMatchFilter(lessonTags, filter) {
 }
 
 export function removeHtmlFileEnding(lessonPage) {
-  // RegEx for matching and removing parts of text that starts with 
+  // RegEx for matching and removing parts of text that starts with
   // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
   return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(">)/g, '$1$2');
 }
