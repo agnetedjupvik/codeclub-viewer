@@ -42,6 +42,16 @@ export function onFilterCheck(groupName, tagName) {
   };
 }
 
+export function onProgressCheck(path, subtaskID) {
+  return {
+    type: 'PROGRESS_CHECK',
+    payload: {
+      path,
+      subtaskID
+    }
+  };
+}
+
 export function setModeStudent() {
   return {
     type: 'SET_MODE_STUDENT'
