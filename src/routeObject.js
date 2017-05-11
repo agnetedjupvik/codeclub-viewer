@@ -40,7 +40,7 @@ const pathTest = (nextState, replace) => {
   const isReadme = readmeArray.indexOf(path) > -1;
   const pathCorrect = validPathTest(params.lesson, path);
 
-  if(!pathCorrect){
+  if(!pathCorrect && !isReadme){
     replace({pathname:'/NotFound', state: path});
   }
 };

@@ -5,7 +5,7 @@ import {getLevelName} from '../../util';
 import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
-  
+
 const LessonList = React.createClass({
   render() {
     const {t} = this.props;
@@ -13,7 +13,6 @@ const LessonList = React.createClass({
     const level = this.props.level;
     return (
       <div id={this.props.id}>
-        <h3><LevelIcon level={level}/>'{getLevelName(level)}'{' - ' + t('general.level') + ' ' + level}</h3>
         <h3><LevelIcon level={level}/>'{getLevelName(level)}'{' - ' + t('general.level') + ' ' + level}</h3>
         <ListGroup>
           {lessons.map((lesson, idx) =>

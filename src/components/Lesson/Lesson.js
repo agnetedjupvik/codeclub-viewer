@@ -15,7 +15,6 @@ import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {connect} from 'react-redux';
 import {setModeTeacher, setLanguage} from '../../action_creators';
 import {getTranslator} from '../../selectors/translate';
 
@@ -101,7 +100,7 @@ const Lesson = React.createClass({
       <div className={styles.container}>
         <h1>
           <LevelIcon level={this.getLevel()}/>
-          {this.getTitle()}{this.getLevel > 0 ? '-  ' + {t('general.level')} + this.getLevel() : ''}
+          {this.getTitle()}{this.getLevel > 0 ? '-  ' + t('general.level') + this.getLevel() : ''}
         </h1>
         {this.getAuthor() !== '' ? <p><i> {t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
         {instructionBtn}
@@ -145,4 +144,3 @@ export default connect(
     setLanguage
   }
   )(withStyles(styles, contentStyles)(Lesson));
-
