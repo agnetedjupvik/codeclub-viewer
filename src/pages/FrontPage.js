@@ -11,6 +11,7 @@ import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import ButtonItem from '../components/ButtonItem';
 import {setModeTeacher} from '../action_creators';
+import {getTranslator} from '../selectors/translate';
 
 export const  FrontPage = React.createClass({
 
@@ -19,6 +20,7 @@ export const  FrontPage = React.createClass({
   },
 
   render() {
+    const {t} = this.props;
     return (
       <Grid fluid={true}>
 
@@ -64,12 +66,14 @@ FrontPage.propTypes = {
   courses: PropTypes.object,
   externalCourses: PropTypes.object,
   isStudentMode: PropTypes.bool,
-  setModeTeacher: PropTypes.func
+  setModeTeacher: PropTypes.func,
+  t: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    isStudentMode: state.isStudentMode
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state)
   };
 }
 

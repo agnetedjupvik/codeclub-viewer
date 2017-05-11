@@ -4,7 +4,7 @@ import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
 import App from './pages/App';
-import NotFound from './pages/PageNotFound';
+import {NotFoundContainer} from './pages/NotFound';
 import store from './store';
 
 const lessons = store.getState().lessons;
@@ -40,13 +40,13 @@ const pathTest = (nextState, replace) => {
   const isReadme = readmeArray.indexOf(path) > -1;
   const pathCorrect = validPathTest(params.lesson, path);
 
-  if(!pathCorrect && !isReadme){
-    replace({pathname:'/PageNotFound', state: path});
+  if(!pathCorrect){
+    replace({pathname:'/NotFound', state: path});
   }
 };
 
 /**
-* Replaces the current URL (/PageNotFound) with the the URL either typed in by the user
+* Replaces the current URL (/NotFound) with the the URL either typed in by the user
 * or the URL given by a broken link.
 * History is used directly because react-router does not provide the necesarry functionallity
 * to replace the URL without a page refresh.
@@ -61,7 +61,7 @@ const saveURL = (nextState, replace) => {
 
 /**
 * Checks if there has been passed down a redirect from 404.html.
-* If so, redirects to /PageNotFound with a state that equals the URL that caused a 404.
+* If so, redirects to /NotFound with a state that equals the URL that caused a 404.
 * Happens when a server side 404 has occured.
 */
 const serverSideRedirectCheck = (nextState, replace) => {
@@ -70,7 +70,7 @@ const serverSideRedirectCheck = (nextState, replace) => {
     delete sessionStorage.redirect;
 
     if (redirect && redirect != nextState.location.pathname) {
-      replace({pathname:'/PageNotFound', state: redirect});
+      replace({pathname:'/NotFound', state: redirect});
     }
   }
 };
@@ -84,15 +84,16 @@ const serverSideRedirectCheck = (nextState, replace) => {
 export default function getRouteObject(
   getComponentFrontPage,
   getComponentPlaylist,
-  getComponentLessonPage
+  getComponentLessonPage,
+  getComponentNotFound
 ) {
   return (
     <Route path="/" component={App}>
       <IndexRoute getComponent={getComponentFrontPage} onEnter={serverSideRedirectCheck}/>
-      <Route path="/PageNotFound" component={NotFound} onEnter={saveURL}/>
+      <Route path="/NotFound" getComponent={getComponentNotFound} onEnter={saveURL}/>
       <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>
       <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage} onEnter={pathTest}/>
-      <Route path="*" component={NotFound}/>
+      <Route path="*" getComponent={getComponentNotFound}/>
     </Route>
   );
 }

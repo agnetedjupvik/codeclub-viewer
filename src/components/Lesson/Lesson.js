@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Lesson.scss';
@@ -16,6 +17,7 @@ import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {connect} from 'react-redux';
 import {setModeTeacher, setLanguage} from '../../action_creators';
+import {getTranslator} from '../../selectors/translate';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -92,16 +94,16 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const {path, lessons, isReadme, isStudentMode} = this.props;
+    const {path, lessons, isReadme, isStudentMode, t} = this.props;
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons}}/>;
     return (
       <div className={styles.container}>
         <h1>
           <LevelIcon level={this.getLevel()}/>
-          {this.getTitle()}{this.getLevel > 0 ? '- Level ' + this.getLevel() : ''}
+          {this.getTitle()}{this.getLevel > 0 ? '-  ' + {t('general.level')} + this.getLevel() : ''}
         </h1>
-        {this.getAuthor() !== '' ? <p><i>av {this.getAuthor()}</i></p> : ''}
+        {this.getAuthor() !== '' ? <p><i> {t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
         {instructionBtn}
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
@@ -124,14 +126,16 @@ Lesson.propTypes = {
   isStudentMode: PropTypes.bool,
   setModeTeacher: PropTypes.func,
   setLanguage: PropTypes.func,
-  isReadme: PropTypes.bool
+  isReadme: PropTypes.bool,
+  t: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => ({
   isStudentMode: state.isStudentMode,
   lessons: state.lessons,
   language: state.language,
-  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1
+  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1,
+  t: getTranslator(state)
 });
 
 export default connect(
@@ -141,3 +145,4 @@ export default connect(
     setLanguage
   }
   )(withStyles(styles, contentStyles)(Lesson));
+
